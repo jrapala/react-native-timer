@@ -1,8 +1,16 @@
 import React, { useState } from "react"
-import { SafeAreaView, View, Text, StatusBar } from "react-native"
+import {
+	Dimensions,
+	SafeAreaView,
+	StatusBar,
+	Text,
+	TouchableOpacity,
+} from "react-native"
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
+
+const { width } = Dimensions.get("window")
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
@@ -11,37 +19,33 @@ const App: React.FC = () => {
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
-				<SectionContainer>
-					<SectionTitle>Welcome</SectionTitle>
-					<SectionDescription>
-						{`This is Juliette's React Native project template.`}
-					</SectionDescription>
-				</SectionContainer>
+				<Button onPress={(): null => null}>
+					<ButtonText>Start</ButtonText>
+				</Button>
 			</StyledSafeAreaView>
 		</ThemeProvider>
 	)
 }
 
 const StyledSafeAreaView = styled(SafeAreaView)`
+	align-items: center;
 	background-color: ${(props): string => props.theme.primaryColor};
 	flex: 1;
+	justify-content: center;
 `
 
-const SectionContainer = styled(View)`
-	margin-top: 32px;
-	padding: 0 24px;
+const Button = styled(TouchableOpacity)`
+	align-items: center;
+	border-color: ${(props): string => props.theme.secondaryColor};
+	border-radius: ${`${width / 2}px`};
+	border-width: 10px;
+	height: ${`${width / 2}px`};
+	justify-content: center;
+	width: 50%;
 `
 
-const SectionTitle = styled(Text)`
-	color: ${(props): string => props.theme.textColorOnPrimary};
-	font-size: 24px;
-	font-weight: 600;
-`
-
-const SectionDescription = styled(Text)`
-	color: ${(props): string => props.theme.textColorOnPrimary};
-	font-size: 18px;
-	font-weight: 400;
-	margin-top: 8px;
+const ButtonText = styled(Text)`
+	color: ${(props): string => props.theme.secondaryColor};
+	font-size: 45px;
 `
 export default App
