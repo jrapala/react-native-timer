@@ -9,16 +9,21 @@ import {
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
+import { getRemaining } from "./utils/timerHelpers"
 
 const { width } = Dimensions.get("window")
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
+	const [remainingSeconds] = useState(90)
+
+	const { minutes, seconds } = getRemaining(remainingSeconds)
 
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
+				<TimerText>{`${minutes}:${seconds}`}</TimerText>
 				<Button onPress={(): null => null}>
 					<ButtonText>Start</ButtonText>
 				</Button>
@@ -41,11 +46,17 @@ const Button = styled(TouchableOpacity)`
 	border-width: 10px;
 	height: ${`${width / 2}px`};
 	justify-content: center;
+	margin-top: 30px;
 	width: 50%;
 `
 
 const ButtonText = styled(Text)`
 	color: ${(props): string => props.theme.secondaryColor};
 	font-size: 45px;
+`
+
+const TimerText = styled(Text)`
+	color: white;
+	font-size: 90px;
 `
 export default App
