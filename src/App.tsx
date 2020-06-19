@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
 	Dimensions,
 	SafeAreaView,
@@ -11,6 +11,10 @@ import styled, { ThemeProvider } from "styled-components/native"
 import { iOSDarkTheme } from "./styles"
 import { getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
+
+interface ButtonProps {
+	isRunning: boolean
+}
 
 const { width } = Dimensions.get("window")
 
@@ -32,13 +36,22 @@ const App: React.FC = () => {
 		setIsRunning(currentState => !currentState)
 	}
 
+	useEffect(() => {
+		if (remainingSeconds === 0) {
+			setIsRunning(false)
+			setRemainingSeconds(5)
+		}
+	}, [remainingSeconds])
+
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
 				<TimerText>{`${minutes}:${seconds}`}</TimerText>
-				<Button onPress={toggleTimer}>
-					<ButtonText>{isRunning ? "Stop" : "Pause"}</ButtonText>
+				<Button isRunning={isRunning} onPress={toggleTimer}>
+					<ButtonText isRunning={isRunning}>
+						{isRunning ? "Stop" : "Start"}
+					</ButtonText>
 				</Button>
 			</StyledSafeAreaView>
 		</ThemeProvider>
@@ -52,9 +65,10 @@ const StyledSafeAreaView = styled(SafeAreaView)`
 	justify-content: center;
 `
 
-const Button = styled(TouchableOpacity)`
+const Button = styled(TouchableOpacity)<ButtonProps>`
 	align-items: center;
-	border-color: ${(props): string => props.theme.secondaryColor};
+	border-color: ${(props): string =>
+		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
 	border-radius: ${`${width / 2}px`};
 	border-width: 10px;
 	height: ${`${width / 2}px`};
@@ -63,8 +77,9 @@ const Button = styled(TouchableOpacity)`
 	width: 50%;
 `
 
-const ButtonText = styled(Text)`
-	color: ${(props): string => props.theme.secondaryColor};
+const ButtonText = styled(Text)<ButtonProps>`
+	color: ${(props): string =>
+		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
 	font-size: 45px;
 `
 
