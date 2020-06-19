@@ -12,7 +12,7 @@ import { iOSDarkTheme } from "./styles"
 import { getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
 
-interface ButtonProps {
+interface TimerButtonProps {
 	isRunning: boolean
 }
 
@@ -32,27 +32,34 @@ const App: React.FC = () => {
 		isRunning ? 1000 : null
 	)
 
+	useEffect(() => {
+		if (remainingSeconds === 0) {
+			resetTimer()
+		}
+	}, [remainingSeconds])
+
 	const toggleTimer = (): void => {
 		setIsRunning(currentState => !currentState)
 	}
 
-	useEffect(() => {
-		if (remainingSeconds === 0) {
-			setIsRunning(false)
-			setRemainingSeconds(5)
-		}
-	}, [remainingSeconds])
+	const resetTimer = (): void => {
+		setIsRunning(false)
+		setRemainingSeconds(5)
+	}
 
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
 				<TimerText>{`${minutes}:${seconds}`}</TimerText>
-				<Button isRunning={isRunning} onPress={toggleTimer}>
-					<ButtonText isRunning={isRunning}>
+				<TimerButton isRunning={isRunning} onPress={toggleTimer}>
+					<TimerButtonText isRunning={isRunning}>
 						{isRunning ? "Stop" : "Start"}
-					</ButtonText>
-				</Button>
+					</TimerButtonText>
+				</TimerButton>
+				<ResetButton onPress={resetTimer}>
+					<ResetButtonText>Reset</ResetButtonText>
+				</ResetButton>
 			</StyledSafeAreaView>
 		</ThemeProvider>
 	)
@@ -65,7 +72,7 @@ const StyledSafeAreaView = styled(SafeAreaView)`
 	justify-content: center;
 `
 
-const Button = styled(TouchableOpacity)<ButtonProps>`
+const TimerButton = styled(TouchableOpacity)<TimerButtonProps>`
 	align-items: center;
 	border-color: ${(props): string =>
 		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
@@ -77,7 +84,7 @@ const Button = styled(TouchableOpacity)<ButtonProps>`
 	width: 50%;
 `
 
-const ButtonText = styled(Text)<ButtonProps>`
+const TimerButtonText = styled(Text)<TimerButtonProps>`
 	color: ${(props): string =>
 		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
 	font-size: 45px;
@@ -87,4 +94,16 @@ const TimerText = styled(Text)`
 	color: white;
 	font-size: 90px;
 `
+
+const ResetButton = styled(TouchableOpacity)`
+	align-items: center;
+	justify-content: center;
+	margin-top: 30px;
+`
+
+const ResetButtonText = styled(Text)`
+	color: ${(props): string => props.theme.dimTextColorOnPrimary};
+	font-size: 30px;
+`
+
 export default App
