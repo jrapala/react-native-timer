@@ -10,22 +10,35 @@ import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
 import { getRemaining } from "./utils/timerHelpers"
+import useInterval from "./hooks/useInterval"
 
 const { width } = Dimensions.get("window")
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
-	const [remainingSeconds] = useState(90)
+	const [isRunning, setIsRunning] = useState(false)
+	const [remainingSeconds, setRemainingSeconds] = useState(5)
 
 	const { minutes, seconds } = getRemaining(remainingSeconds)
+
+	useInterval(
+		() => {
+			setRemainingSeconds(currentSeconds => currentSeconds - 1)
+		},
+		isRunning ? 1000 : null
+	)
+
+	const toggleTimer = (): void => {
+		setIsRunning(currentState => !currentState)
+	}
 
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
 				<TimerText>{`${minutes}:${seconds}`}</TimerText>
-				<Button onPress={(): null => null}>
-					<ButtonText>Start</ButtonText>
+				<Button onPress={toggleTimer}>
+					<ButtonText>{isRunning ? "Stop" : "Pause"}</ButtonText>
 				</Button>
 			</StyledSafeAreaView>
 		</ThemeProvider>
