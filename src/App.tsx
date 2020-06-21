@@ -5,7 +5,9 @@ import {
 	StatusBar,
 	Text,
 	TouchableOpacity,
+	View,
 } from "react-native"
+import { Picker } from "@react-native-community/picker"
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
@@ -17,6 +19,19 @@ interface TimerButtonProps {
 }
 
 const { width } = Dimensions.get("window")
+
+const createArray = (length: number): string[] => {
+	const arr = []
+	let i = 0
+	while (i < length) {
+		arr.push(i.toString())
+		i++
+	}
+	return arr
+}
+
+const AVAILABLE_MINUTES = createArray(10)
+const AVAILABLE_SECONDS = createArray(60)
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
@@ -47,11 +62,34 @@ const App: React.FC = () => {
 		setRemainingSeconds(5)
 	}
 
+	const Pickers: React.FC = () => {
+		return (
+			<PickerContainer>
+				<StyledPicker itemStyle={pickerItemStyle} selectedValue="5">
+					{AVAILABLE_MINUTES.map(value => (
+						<Picker.Item key={value} label={value} value={value} />
+					))}
+				</StyledPicker>
+				<PickerLabel>minutes</PickerLabel>
+				<StyledPicker itemStyle={pickerItemStyle} selectedValue="5">
+					{AVAILABLE_SECONDS.map(value => (
+						<Picker.Item key={value} label={value} value={value} />
+					))}
+				</StyledPicker>
+				<PickerLabel>seconds</PickerLabel>
+			</PickerContainer>
+		)
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
-				<TimerText>{`${minutes}:${seconds}`}</TimerText>
+				{isRunning ? (
+					<TimerText>{`${minutes}:${seconds}`}</TimerText>
+				) : (
+					<Pickers />
+				)}
 				<TimerButton isRunning={isRunning} onPress={toggleTimer}>
 					<TimerButtonText isRunning={isRunning}>
 						{isRunning ? "Stop" : "Start"}
@@ -64,6 +102,8 @@ const App: React.FC = () => {
 		</ThemeProvider>
 	)
 }
+
+const pickerItemStyle = { color: "#FFF", fontSize: 20 }
 
 const StyledSafeAreaView = styled(SafeAreaView)`
 	align-items: center;
@@ -104,6 +144,20 @@ const ResetButton = styled(TouchableOpacity)`
 const ResetButtonText = styled(Text)`
 	color: ${(props): string => props.theme.dimTextColorOnPrimary};
 	font-size: 30px;
+`
+
+const PickerContainer = styled(View)`
+	align-items: center;
+	flex-direction: row;
+`
+
+const StyledPicker = styled(Picker)`
+	width: 50px;
+`
+
+const PickerLabel = styled(Text)`
+	color: white;
+	font-size: 20px;
 `
 
 export default App
