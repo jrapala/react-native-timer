@@ -14,6 +14,7 @@ import styled, { css, ThemeProvider } from "styled-components/native"
 import { iOSDarkTheme } from "./styles"
 import { getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
+import normalize from "./utils/normalize"
 
 interface TimerButtonProps {
 	isRunning: boolean
@@ -136,12 +137,12 @@ const TimerButton = styled(TouchableOpacity)<TimerButtonProps>`
 const TimerButtonText = styled(Text)<TimerButtonProps>`
 	color: ${(props): string =>
 		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
-	font-size: 45px;
+	font-size: ${normalize(38) + "px"};
 `
 
 const TimerText = styled(Text)`
 	color: white;
-	font-size: 90px;
+	font-size: ${normalize(75) + "px"};
 `
 
 const ResetButton = styled(TouchableOpacity)`
@@ -152,7 +153,7 @@ const ResetButton = styled(TouchableOpacity)`
 
 const ResetButtonText = styled(Text)`
 	color: ${(props): string => props.theme.dimTextColorOnPrimary};
-	font-size: 25px;
+	font-size: ${normalize(22) + "px"};
 `
 
 const PickerContainer = styled(View)`
@@ -177,7 +178,7 @@ const StyledPicker = styled(Picker)`
 
 const PickerLabel = styled(Text)`
 	color: white;
-	font-size: 20px;
+	font-size: ${normalize(18) + "px"};
 `
 
 export default App
