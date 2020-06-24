@@ -10,3 +10,7 @@ export const getRemaining = (time: number): Time => {
 	const seconds = time - minutes * 60
 	return { minutes: formatNumber(minutes), seconds: formatNumber(seconds) }
 }
+
+export const convertToSeconds = (minutes: string, seconds: string): number => {
+	return parseInt(minutes, 10) * 60 + parseInt(seconds, 10)
+}

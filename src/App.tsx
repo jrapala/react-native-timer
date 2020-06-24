@@ -12,7 +12,7 @@ import { Picker } from "@react-native-community/picker"
 import styled, { css, ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
-import { getRemaining } from "./utils/timerHelpers"
+import { convertToSeconds, getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
 import normalize from "./utils/normalize"
 
@@ -39,6 +39,8 @@ const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
 	const [isRunning, setIsRunning] = useState(false)
 	const [remainingSeconds, setRemainingSeconds] = useState(5)
+	const [selectedMinutes, setSelectedMinutes] = useState("5")
+	const [selectedSeconds, setSelectedSeconds] = useState("5")
 
 	const { minutes, seconds } = getRemaining(remainingSeconds)
 
@@ -57,6 +59,7 @@ const App: React.FC = () => {
 
 	const toggleTimer = (): void => {
 		setIsRunning(currentState => !currentState)
+		setRemainingSeconds(convertToSeconds(selectedMinutes, selectedSeconds))
 	}
 
 	const resetTimer = (): void => {
@@ -69,8 +72,11 @@ const App: React.FC = () => {
 			<PickerContainer>
 				<StyledPicker
 					itemStyle={pickerItemStyle}
-					selectedValue="5"
 					mode="dropdown"
+					selectedValue={selectedMinutes}
+					onValueChange={(itemValue): void => {
+						setSelectedMinutes(itemValue.toString())
+					}}
 				>
 					{AVAILABLE_MINUTES.map(value => (
 						<Picker.Item key={value} label={value} value={value} />
@@ -79,8 +85,11 @@ const App: React.FC = () => {
 				<PickerLabel>minutes</PickerLabel>
 				<StyledPicker
 					itemStyle={pickerItemStyle}
-					selectedValue="5"
 					mode="dropdown"
+					selectedValue={selectedSeconds}
+					onValueChange={(itemValue): void => {
+						setSelectedSeconds(itemValue.toString())
+					}}
 				>
 					{AVAILABLE_SECONDS.map(value => (
 						<Picker.Item key={value} label={value} value={value} />
@@ -169,9 +178,6 @@ const StyledPicker = styled(Picker)`
 			color: ${(props): string => props.theme.textColorOnPrimary};
 			margin-left: 5%;
 			margin-right: -10%;
-		`,
-		ios: css`
-			color: blue;
 		`,
 	})};
 `
