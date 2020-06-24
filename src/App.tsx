@@ -12,6 +12,7 @@ import { Picker } from "@react-native-community/picker"
 import styled, { css, ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
+import { AVAILABLE_MINUTES, AVAILABLE_SECONDS } from "./constants"
 import { convertToSeconds, getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
 import normalize from "./utils/normalize"
@@ -21,19 +22,6 @@ interface TimerButtonProps {
 }
 
 const { width } = Dimensions.get("window")
-
-const createArray = (length: number): string[] => {
-	const arr = []
-	let i = 0
-	while (i < length) {
-		arr.push(i.toString())
-		i++
-	}
-	return arr
-}
-
-const AVAILABLE_MINUTES = createArray(10)
-const AVAILABLE_SECONDS = createArray(60)
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
