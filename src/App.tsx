@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {
 	Dimensions,
+	Platform,
 	SafeAreaView,
 	StatusBar,
 	Text,
@@ -8,7 +9,7 @@ import {
 	View,
 } from "react-native"
 import { Picker } from "@react-native-community/picker"
-import styled, { ThemeProvider } from "styled-components/native"
+import styled, { css, ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
 import { getRemaining } from "./utils/timerHelpers"
@@ -65,13 +66,21 @@ const App: React.FC = () => {
 	const Pickers: React.FC = () => {
 		return (
 			<PickerContainer>
-				<StyledPicker itemStyle={pickerItemStyle} selectedValue="5">
+				<StyledPicker
+					itemStyle={pickerItemStyle}
+					selectedValue="5"
+					mode="dropdown"
+				>
 					{AVAILABLE_MINUTES.map(value => (
 						<Picker.Item key={value} label={value} value={value} />
 					))}
 				</StyledPicker>
 				<PickerLabel>minutes</PickerLabel>
-				<StyledPicker itemStyle={pickerItemStyle} selectedValue="5">
+				<StyledPicker
+					itemStyle={pickerItemStyle}
+					selectedValue="5"
+					mode="dropdown"
+				>
 					{AVAILABLE_SECONDS.map(value => (
 						<Picker.Item key={value} label={value} value={value} />
 					))}
@@ -152,7 +161,18 @@ const PickerContainer = styled(View)`
 `
 
 const StyledPicker = styled(Picker)`
-	width: 50px;
+	width: 20%;
+	${Platform.select({
+		android: css`
+			background-color: ${(props): string => props.theme.primaryColor};
+			color: ${(props): string => props.theme.textColorOnPrimary};
+			margin-left: 5%;
+			margin-right: -10%;
+		`,
+		ios: css`
+			color: blue;
+		`,
+	})};
 `
 
 const PickerLabel = styled(Text)`
