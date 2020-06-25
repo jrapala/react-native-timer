@@ -4,11 +4,11 @@ import styled from "styled-components/native"
 
 import normalize from "../../utils/normalize"
 
+const { width } = Dimensions.get("window")
+
 interface TimerButtonProps {
 	isRunning: boolean
 }
-
-const { width } = Dimensions.get("window")
 
 interface Props {
 	isRunning: boolean

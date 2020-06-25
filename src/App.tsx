@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react"
-import { Alert, SafeAreaView, StatusBar, Text } from "react-native"
+import { Alert, SafeAreaView, StatusBar } from "react-native"
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
 import Picker from "./components/Picker"
+import Timer from "./components/Timer"
 import TimerButton from "./components/TimerButton"
 import ResetButton from "./components/ResetButton"
-import { convertToSeconds, getRemaining } from "./utils/timerHelpers"
+import { convertToSeconds } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
-import normalize from "./utils/normalize"
-
-interface TimerButtonProps {
-	isRunning: boolean
-}
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
@@ -21,8 +17,6 @@ const App: React.FC = () => {
 	const [remainingSeconds, setRemainingSeconds] = useState(60)
 	const [selectedMinutes, setSelectedMinutes] = useState<string>("1")
 	const [selectedSeconds, setSelectedSeconds] = useState<string>("0")
-
-	const { minutes, seconds } = getRemaining(remainingSeconds)
 
 	useInterval(
 		() => {
@@ -60,7 +54,7 @@ const App: React.FC = () => {
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
 				{showTimer ? (
-					<TimerText>{`${minutes}:${seconds}`}</TimerText>
+					<Timer remainingSeconds={remainingSeconds} />
 				) : (
 					<Picker
 						selectedMinutes={selectedMinutes}
@@ -83,9 +77,4 @@ const StyledSafeAreaView = styled(SafeAreaView)`
 	justify-content: center;
 `
 
-const TimerText = styled(Text)`
-	color: white;
-	font-size: ${normalize(75) + "px"};
-	margin-bottom: 10%;
-`
 export default App
