@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react"
-import {
-	Alert,
-	Dimensions,
-	SafeAreaView,
-	StatusBar,
-	Text,
-	TouchableOpacity,
-} from "react-native"
+import { Alert, SafeAreaView, StatusBar, Text } from "react-native"
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
 import Picker from "./components/Picker"
+import TimerButton from "./components/TimerButton"
 import ResetButton from "./components/ResetButton"
 import { convertToSeconds, getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
@@ -19,8 +13,6 @@ import normalize from "./utils/normalize"
 interface TimerButtonProps {
 	isRunning: boolean
 }
-
-const { width } = Dimensions.get("window")
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
@@ -77,11 +69,7 @@ const App: React.FC = () => {
 						setSelectedSeconds={setSelectedSeconds}
 					/>
 				)}
-				<TimerButton isRunning={isRunning} onPress={toggleTimer}>
-					<TimerButtonText isRunning={isRunning}>
-						{isRunning ? "Stop" : "Start"}
-					</TimerButtonText>
-				</TimerButton>
+				<TimerButton isRunning={isRunning} onPress={toggleTimer} />
 				{showTimer && <ResetButton onPress={resetTimer} />}
 			</StyledSafeAreaView>
 		</ThemeProvider>
@@ -93,23 +81,6 @@ const StyledSafeAreaView = styled(SafeAreaView)`
 	background-color: ${(props): string => props.theme.primaryColor};
 	flex: 1;
 	justify-content: center;
-`
-
-const TimerButton = styled(TouchableOpacity)<TimerButtonProps>`
-	align-items: center;
-	border-color: ${(props): string =>
-		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
-	border-radius: ${`${width / 2}px`};
-	border-width: 10px;
-	height: ${`${width / 2}px`};
-	justify-content: center;
-	width: 50%;
-`
-
-const TimerButtonText = styled(Text)<TimerButtonProps>`
-	color: ${(props): string =>
-		props.isRunning ? props.theme.accentColor : props.theme.secondaryColor};
-	font-size: ${normalize(38) + "px"};
 `
 
 const TimerText = styled(Text)`
