@@ -11,6 +11,7 @@ import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
 import Picker from "./components/Picker"
+import ResetButton from "./components/ResetButton"
 import { convertToSeconds, getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
 import normalize from "./utils/normalize"
@@ -81,11 +82,7 @@ const App: React.FC = () => {
 						{isRunning ? "Stop" : "Start"}
 					</TimerButtonText>
 				</TimerButton>
-				{showTimer && (
-					<ResetButton onPress={resetTimer}>
-						<ResetButtonText>Reset</ResetButtonText>
-					</ResetButton>
-				)}
+				{showTimer && <ResetButton onPress={resetTimer} />}
 			</StyledSafeAreaView>
 		</ThemeProvider>
 	)
@@ -120,16 +117,4 @@ const TimerText = styled(Text)`
 	font-size: ${normalize(75) + "px"};
 	margin-bottom: 10%;
 `
-
-const ResetButton = styled(TouchableOpacity)`
-	align-items: center;
-	justify-content: center;
-	margin-top: 10%;
-`
-
-const ResetButtonText = styled(Text)`
-	color: ${(props): string => props.theme.dimTextColorOnPrimary};
-	font-size: ${normalize(22) + "px"};
-`
-
 export default App
