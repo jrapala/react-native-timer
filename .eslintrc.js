@@ -35,6 +35,7 @@ module.exports = {
 				extensions: [".js", ".jsx", ".ts", ".tsx"],
 			},
 		],
+		"react/prop-types": 0,
 		"react-native/no-raw-text": 0,
 		"react-native/sort-styles": "warn",
 		"import/no-named-as-default-member": 0,

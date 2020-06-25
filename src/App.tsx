@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react"
 import {
 	Alert,
 	Dimensions,
-	Platform,
 	SafeAreaView,
 	StatusBar,
 	Text,
 	TouchableOpacity,
-	View,
 } from "react-native"
-import { Picker } from "@react-native-community/picker"
-import styled, { css, ThemeProvider } from "styled-components/native"
+import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
-import { AVAILABLE_MINUTES, AVAILABLE_SECONDS } from "./constants"
+import Picker from "./components/Picker"
 import { convertToSeconds, getRemaining } from "./utils/timerHelpers"
 import useInterval from "./hooks/useInterval"
 import normalize from "./utils/normalize"
@@ -29,8 +26,8 @@ const App: React.FC = () => {
 	const [isRunning, setIsRunning] = useState(false)
 	const [showTimer, setShowTimer] = useState(false)
 	const [remainingSeconds, setRemainingSeconds] = useState(60)
-	const [selectedMinutes, setSelectedMinutes] = useState("1")
-	const [selectedSeconds, setSelectedSeconds] = useState("0")
+	const [selectedMinutes, setSelectedMinutes] = useState<string>("1")
+	const [selectedSeconds, setSelectedSeconds] = useState<string>("0")
 
 	const { minutes, seconds } = getRemaining(remainingSeconds)
 
@@ -65,39 +62,6 @@ const App: React.FC = () => {
 		setIsRunning(false)
 	}
 
-	const Pickers: React.FC = () => {
-		return (
-			<PickerContainer>
-				<StyledPicker
-					itemStyle={pickerItemStyle}
-					mode="dropdown"
-					selectedValue={selectedMinutes}
-					onValueChange={(itemValue): void => {
-						setSelectedMinutes(itemValue.toString())
-					}}
-				>
-					{AVAILABLE_MINUTES.map(value => (
-						<Picker.Item key={value} label={value} value={value} />
-					))}
-				</StyledPicker>
-				<PickerLabel>minutes</PickerLabel>
-				<StyledPicker
-					itemStyle={pickerItemStyle}
-					mode="dropdown"
-					selectedValue={selectedSeconds}
-					onValueChange={(itemValue): void => {
-						setSelectedSeconds(itemValue.toString())
-					}}
-				>
-					{AVAILABLE_SECONDS.map(value => (
-						<Picker.Item key={value} label={value} value={value} />
-					))}
-				</StyledPicker>
-				<PickerLabel>seconds</PickerLabel>
-			</PickerContainer>
-		)
-	}
-
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
@@ -105,7 +69,12 @@ const App: React.FC = () => {
 				{showTimer ? (
 					<TimerText>{`${minutes}:${seconds}`}</TimerText>
 				) : (
-					<Pickers />
+					<Picker
+						selectedMinutes={selectedMinutes}
+						selectedSeconds={selectedSeconds}
+						setSelectedMinutes={setSelectedMinutes}
+						setSelectedSeconds={setSelectedSeconds}
+					/>
 				)}
 				<TimerButton isRunning={isRunning} onPress={toggleTimer}>
 					<TimerButtonText isRunning={isRunning}>
@@ -121,8 +90,6 @@ const App: React.FC = () => {
 		</ThemeProvider>
 	)
 }
-
-const pickerItemStyle = { color: "#FFF", fontSize: 20 }
 
 const StyledSafeAreaView = styled(SafeAreaView)`
 	align-items: center;
@@ -163,34 +130,6 @@ const ResetButton = styled(TouchableOpacity)`
 const ResetButtonText = styled(Text)`
 	color: ${(props): string => props.theme.dimTextColorOnPrimary};
 	font-size: ${normalize(22) + "px"};
-`
-
-const PickerContainer = styled(View)`
-	align-items: center;
-	flex-direction: row;
-	margin-bottom: 10%;
-	${Platform.select({
-		ios: css`
-			margin-top: -43%;
-		`,
-	})};
-`
-
-const StyledPicker = styled(Picker)`
-	width: 25%;
-	${Platform.select({
-		android: css`
-			background-color: ${(props): string => props.theme.primaryColor};
-			color: ${(props): string => props.theme.textColorOnPrimary};
-			margin-left: 5%;
-			margin-right: -15%;
-		`,
-	})};
-`
-
-const PickerLabel = styled(Text)`
-	color: white;
-	font-size: ${normalize(18) + "px"};
 `
 
 export default App
