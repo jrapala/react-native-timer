@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Alert, SafeAreaView, StatusBar } from "react-native"
+import { Alert, SafeAreaView, StatusBar, Vibration } from "react-native"
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
@@ -29,6 +29,7 @@ const App: React.FC = () => {
 		if (remainingSeconds === 0) {
 			setIsRunning(false)
 			Alert.alert("Time's Up!")
+			Vibration.vibrate(400)
 		}
 	}, [remainingSeconds])
 
