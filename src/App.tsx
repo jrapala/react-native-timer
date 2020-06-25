@@ -169,6 +169,11 @@ const PickerContainer = styled(View)`
 	align-items: center;
 	flex-direction: row;
 	margin-bottom: 10%;
+	${Platform.select({
+		ios: css`
+			margin-top: -43%;
+		`,
+	})};
 `
 
 const StyledPicker = styled(Picker)`
