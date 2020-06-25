@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
+	Alert,
 	Dimensions,
 	Platform,
 	SafeAreaView,
@@ -26,9 +27,10 @@ const { width } = Dimensions.get("window")
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
 	const [isRunning, setIsRunning] = useState(false)
-	const [remainingSeconds, setRemainingSeconds] = useState(5)
-	const [selectedMinutes, setSelectedMinutes] = useState("5")
-	const [selectedSeconds, setSelectedSeconds] = useState("5")
+	const [showTimer, setShowTimer] = useState(false)
+	const [remainingSeconds, setRemainingSeconds] = useState(60)
+	const [selectedMinutes, setSelectedMinutes] = useState("1")
+	const [selectedSeconds, setSelectedSeconds] = useState("0")
 
 	const { minutes, seconds } = getRemaining(remainingSeconds)
 
@@ -41,18 +43,26 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		if (remainingSeconds === 0) {
-			resetTimer()
+			setIsRunning(false)
+			Alert.alert("Time's Up!")
 		}
 	}, [remainingSeconds])
 
 	const toggleTimer = (): void => {
-		setIsRunning(currentState => !currentState)
-		setRemainingSeconds(convertToSeconds(selectedMinutes, selectedSeconds))
+		if (!showTimer) {
+			setShowTimer(true)
+			setRemainingSeconds(
+				convertToSeconds(selectedMinutes, selectedSeconds)
+			)
+			setIsRunning(true)
+		} else if (remainingSeconds > 0) {
+			setIsRunning(currentState => !currentState)
+		}
 	}
 
 	const resetTimer = (): void => {
+		setShowTimer(false)
 		setIsRunning(false)
-		setRemainingSeconds(5)
 	}
 
 	const Pickers: React.FC = () => {
@@ -92,7 +102,7 @@ const App: React.FC = () => {
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
-				{isRunning ? (
+				{showTimer ? (
 					<TimerText>{`${minutes}:${seconds}`}</TimerText>
 				) : (
 					<Pickers />
@@ -102,9 +112,11 @@ const App: React.FC = () => {
 						{isRunning ? "Stop" : "Start"}
 					</TimerButtonText>
 				</TimerButton>
-				<ResetButton onPress={resetTimer}>
-					<ResetButtonText>Reset</ResetButtonText>
-				</ResetButton>
+				{showTimer && (
+					<ResetButton onPress={resetTimer}>
+						<ResetButtonText>Reset</ResetButtonText>
+					</ResetButton>
+				)}
 			</StyledSafeAreaView>
 		</ThemeProvider>
 	)
@@ -127,7 +139,6 @@ const TimerButton = styled(TouchableOpacity)<TimerButtonProps>`
 	border-width: 10px;
 	height: ${`${width / 2}px`};
 	justify-content: center;
-	/* margin-top: 10%; */
 	width: 50%;
 `
 
@@ -140,7 +151,7 @@ const TimerButtonText = styled(Text)<TimerButtonProps>`
 const TimerText = styled(Text)`
 	color: white;
 	font-size: ${normalize(75) + "px"};
-	margin-bottom: 2%;
+	margin-bottom: 10%;
 `
 
 const ResetButton = styled(TouchableOpacity)`
@@ -157,17 +168,17 @@ const ResetButtonText = styled(Text)`
 const PickerContainer = styled(View)`
 	align-items: center;
 	flex-direction: row;
-	margin-bottom: 20%;
+	margin-bottom: 10%;
 `
 
 const StyledPicker = styled(Picker)`
-	width: 20%;
+	width: 25%;
 	${Platform.select({
 		android: css`
 			background-color: ${(props): string => props.theme.primaryColor};
 			color: ${(props): string => props.theme.textColorOnPrimary};
 			margin-left: 5%;
-			margin-right: -10%;
+			margin-right: -15%;
 		`,
 	})};
 `
