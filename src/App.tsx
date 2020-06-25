@@ -127,7 +127,7 @@ const TimerButton = styled(TouchableOpacity)<TimerButtonProps>`
 	border-width: 10px;
 	height: ${`${width / 2}px`};
 	justify-content: center;
-	margin-top: 10%;
+	/* margin-top: 10%; */
 	width: 50%;
 `
 
@@ -140,6 +140,7 @@ const TimerButtonText = styled(Text)<TimerButtonProps>`
 const TimerText = styled(Text)`
 	color: white;
 	font-size: ${normalize(75) + "px"};
+	margin-bottom: 2%;
 `
 
 const ResetButton = styled(TouchableOpacity)`
@@ -156,6 +157,7 @@ const ResetButtonText = styled(Text)`
 const PickerContainer = styled(View)`
 	align-items: center;
 	flex-direction: row;
+	margin-bottom: 20%;
 `
 
 const StyledPicker = styled(Picker)`
