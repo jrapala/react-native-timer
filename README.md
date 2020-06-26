@@ -13,12 +13,6 @@ Features platform-specific styling, and visual, auditory, and physical (vibratio
 
 Please set up a [React Native development environment](https://reactnative.dev/docs/environment-setup) if you have not already done so.
 
-You will also need to create an `.env` file in the root and add your API key for [News API](https://newsapi.org):
-
-```
-API_KEY=YOURKEYHERE
-```
-
 ### Running iOS on a Mac via a simulator
 
 If you wish to install using [Bundler](https://bundler.io/), please see the advanced iOS install instructions at the end of this README. Otherwise, make sure you have a version of CocoaPods installed, and run the following commands:
