@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Alert, SafeAreaView, StatusBar, Vibration } from "react-native"
 import styled, { ThemeProvider } from "styled-components/native"
+import { Player } from "@react-native-community/audio-toolkit"
 
 import { iOSDarkTheme } from "./styles"
 import Picker from "./components/Picker"
@@ -30,6 +31,7 @@ const App: React.FC = () => {
 			setIsRunning(false)
 			Alert.alert("Time's Up!")
 			Vibration.vibrate(400)
+			new Player("alarm.mp3").play()
 		}
 	}, [remainingSeconds])
 

@@ -18,6 +18,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ReactNativeTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativeTimerTests.m */; };
 		373370996691696055A65E8E /* libPods-ReactNativeTimer-ReactNativeTimerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAABF55844BDB2E1B75A58E3 /* libPods-ReactNativeTimer-ReactNativeTimerTests.a */; };
 		4CEF145F3DA871BDD1BF7001 /* libPods-ReactNativeTimer-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FB872CB422894E7BCAF3455 /* libPods-ReactNativeTimer-tvOS.a */; };
+		BC824F3B24A5911600CF2B03 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC824F3A24A5911600CF2B03 /* alarm.mp3 */; };
 		DF277A8E3AA65E83B798A841 /* libPods-ReactNativeTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE787A1891A88D2BB3CA817 /* libPods-ReactNativeTimer.a */; };
 		EF203E68B12285472C15A2BE /* libPods-ReactNativeTimer-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4132576A596B1B3598B82 /* libPods-ReactNativeTimer-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		67F2D7A8B3404D31266F8FD6 /* Pods-ReactNativeTimer-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeTimer-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeTimer-tvOSTests/Pods-ReactNativeTimer-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		98B4132576A596B1B3598B82 /* libPods-ReactNativeTimer-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeTimer-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B742A041B080D5CA66F242B8 /* Pods-ReactNativeTimer-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeTimer-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeTimer-tvOSTests/Pods-ReactNativeTimer-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		BC824F3A24A5911600CF2B03 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		C3876C14D08CECFE95629CD6 /* Pods-ReactNativeTimer-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeTimer-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeTimer-tvOS/Pods-ReactNativeTimer-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CAABF55844BDB2E1B75A58E3 /* libPods-ReactNativeTimer-ReactNativeTimerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeTimer-ReactNativeTimerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCE787A1891A88D2BB3CA817 /* libPods-ReactNativeTimer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeTimer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BC824F3A24A5911600CF2B03 /* alarm.mp3 */,
 				13B07FAE1A68108700A75B9A /* ReactNativeTimer */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ReactNativeTimerTests */,
@@ -194,7 +197,6 @@
 				67F2D7A8B3404D31266F8FD6 /* Pods-ReactNativeTimer-tvOSTests.debug.xcconfig */,
 				B742A041B080D5CA66F242B8 /* Pods-ReactNativeTimer-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -340,6 +342,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				BC824F3B24A5911600CF2B03 /* alarm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
